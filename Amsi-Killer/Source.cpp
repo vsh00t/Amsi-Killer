@@ -68,13 +68,23 @@ searchPattern(
 
 
 int
-wmain() {
+wmain(int argc, wchar_t* argv[]) {
 
 	BYTE pattern[] = { 0x48,'?','?', 0x74,'?',0x48,'?' ,'?' ,0x74 };
 
 	DWORD patternSize = sizeof(pattern);
+	DWORD tpid = 0;
+	if (argc > 1)
+	{
+		tpid = _wtoi(argv[1]);
+	}
 
-	DWORD tpid = GetPID(L"powershell.exe");
+	if (tpid == 0)
+	{
+		printf("No se especificó un PID válido como argumento.\n");
+		return -1;
+	}
+	//DWORD tpid = GetPID(L"powershell.exe");
 
 	if (!tpid)
 		return (-1);
